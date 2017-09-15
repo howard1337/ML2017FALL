@@ -1,2 +1,2 @@
 #!/bin/sh
-python hw0_2.py $1
+python Q2.py $1
