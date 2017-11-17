@@ -19,14 +19,9 @@ from keras.callbacks import LambdaCallback
 from keras.callbacks import TensorBoard
 # from keras.utils import to_categorical
 from keras import backend as K
-import os
-os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 import tensorflow as tf
 from keras.models import load_model
-path_data = '.'
-# path_data = os.environ.get("GRAPE_DATASET_DIR")
-
-train_path = os.path.join(path_data,"train.csv")
+train_path = sys.argv[1]
 # print(train_path,valid_path)
 
 dim_x,dim_y = 48,48
@@ -122,13 +117,12 @@ model.compile( loss = 'categorical_crossentropy', optimizer = 'adam', metrics=['
 model.summary()
 
 callbacks = []
-callbacks.append(ModelCheckpoint('./save/model-{epoch:05d}-{val_acc:.5f}.h5', monitor='val_acc', save_best_only=True, period=1))
+callbacks.append(ModelCheckpoint('./model-{epoch:05d}-{val_acc:.5f}.h5', monitor='val_acc', save_best_only=True, period=1))
 # model.fit(train_in,label,batch_size = 100,epochs = 20)
 
 batch_print_callback = LambdaCallback(on_epoch_end=lambda batch, logs: print('\nEpoch[%d] Train-loss=%f Train-accuracy=%f Validation-loss=%f Validation-accuracy=%f' %(batch,logs['loss'], logs['acc'],logs['val_loss'],logs['val_acc'])))
 
 callbacks.append(batch_print_callback)
-callbacks.append(TensorBoard(log_dir='./image/log', histogram_freq=1))
 
 datagen = ImageDataGenerator(
 	width_shift_range = 0.125,
@@ -141,8 +135,8 @@ datagen.fit(train_in)
 
 
 
-model.fit_generator( datagen.flow(train_in, label, batch_size=128),verbose = 1,validation_data = (train_valid,label_valid), steps_per_epoch=len(train_in) / 128, epochs = 0,callbacks=callbacks )
+model.fit_generator( datagen.flow(train_in, label, batch_size=128),verbose = 1,validation_data = (train_valid,label_valid), steps_per_epoch=len(train_in) / 128, epochs = 200,callbacks=callbacks )
 
-model.save( "./save/model.h5" )
+model.save( "./model_final.h5" )
 
 K.clear_session()
