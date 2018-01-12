@@ -63,7 +63,7 @@ reconstruct = (reconstruct * 255).astype(np.uint8)
 # reconstruct = np.round(reconstruct)
 # reconstruct *= -1
 # io.imshow((ttt.reshape(600,600,3)))
-io.imsave('reconstruction.jpg',reconstruct.reshape(600,600,3))
+io.imsave('reconstruction.jpg',reconstruct.reshape(600,600,3),quality = 100)
 
 
 # sum_value = np.sum(s)
