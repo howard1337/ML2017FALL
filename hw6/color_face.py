@@ -1,3 +1,4 @@
+import os
 import sys
 from skimage import io
 from skimage.transform import rescale
@@ -6,9 +7,10 @@ from numpy.linalg import eig
 
 filename = sys.argv[1]
 face = []
-
-for i in range(415):
-	face.append(io.imread(filename + '/' + str(i) + '.jpg').flatten())
+my_list = os.listdir(filename)
+for i in my_list:
+	face.append(io.imread(filename + '/' + str(i)).flatten())
+	print(filename + '/' + str(i))
 face = np.array(face).T
 
 print(face.shape)
@@ -30,8 +32,8 @@ U, s, V = np.linalg.svd(face, full_matrices=False)
 #0 25 333 129
 
 target = io.imread(filename + '/' + sys.argv[2]).flatten()
-target = (target.T - mean).T 
-weight = np.dot(U[:,:4].T,target.flatten())
+target = (target - mean) 
+weight = np.dot(U[:,:4].T,target)
 # weight = np.absolute(weight)
 reconstruct = np.zeros(shape = face[:,0].shape)
 # ratio = weight / np.sum(weight)
@@ -42,16 +44,6 @@ print(weight)
 # io.imshow(temp.reshape(600,600,3))
 # io.show()
 # sys.exit()
-
-# for i in range(4):
-# 	eigenface = U[:,i][:]
-# 	eigenface -= np.min(eigenface)
-# 	eigenface /= np.max(eigenface)
-# 	eigenface = (eigenface * 255).astype(np.uint8)
-# 	print(eigenface)
-# 	# io.imshow((eigenface.reshape(600,600,3)))
-# 	io.imsave('eig' + str(i) +'.jpg',eigenface.reshape(600,600,3))
-# 	# io.show()
 
 
 for i in range(4):
