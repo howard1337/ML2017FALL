@@ -10,6 +10,7 @@ model.layers.pop()
 model.layers.pop()
 model.layers.pop()
 model.layers.pop()
+model.outputs = [model.layers[-1].output]
 model.summary()
 
 pred = model.predict(data,verbose = 1)
@@ -23,4 +24,4 @@ for i in prediction:
 	if i == 0:
 		cnt += 1
 print(cnt)
-np.save('cluster.npy',prediction)
+# np.save('cluster.npy',prediction)
