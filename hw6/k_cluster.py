@@ -23,4 +23,4 @@ for i in prediction:
 	if i == 0:
 		cnt += 1
 print(cnt)
-np.save('tsne_cluster.npy',prediction)
+np.save('cluster.npy',prediction)
