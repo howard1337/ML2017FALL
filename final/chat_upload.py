@@ -6,8 +6,8 @@ from gensim.models import Word2Vec
 import jieba
 from jieba import analyse
 from scipy import spatial
-jieba.set_dictionary("training_data/dict.txt.big")
-analyse.set_stop_words("training_data/stop.txt")
+jieba.set_dictionary("dict.txt.big")
+analyse.set_stop_words("stop.txt")
 model = Word2Vec.load(sys.argv[1])
 word2idx = {"_PAD": 0}
 #vocab_list = [(k, model.wv[k]) for k, v in model.wv.vocab.items()]
@@ -82,16 +82,16 @@ def sim(quest,opt):
 	sum_sim[0] *= 1.1
 	return sum_sim
 
-test_path = 'testing_data.csv'
+test_path = sys.argv[3]
 test_data = pd.read_csv(test_path)
 
 test_data['dialogue'] = parseData(test_data['dialogue'])
 test_data['options']  = parseData(test_data['options'])
 
-with open('haha.csv','w') as fp:
+with open(sys.argv[2],'w') as fp:
 	print('id,ans',file = fp)
 	for i in range(len(test_data['dialogue'])):
-		if i % 1000 == 0:
+		if i in [1000,2000,3000,4000,5000]:
 			print(i)
 		max_index = np.argmax(sim(test_data['dialogue'][i],test_data['options'][i]))
 		print('%d,%d' %(i+1,max_index),file = fp)
