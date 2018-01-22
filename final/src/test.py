@@ -5,7 +5,7 @@ import subprocess
 test_path = sys.argv[1]
 output_path = sys.argv[2]
 
-with open('used','r') as fp:
+with open('../used','r') as fp:
 	for index,line in enumerate(fp):
 		index = index + 1
 		line = line.strip('\r\n').replace('\\','')
