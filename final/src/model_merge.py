@@ -17,7 +17,6 @@ for i in range(5060):
 	for j in range(len(fp)):
 		a = int(fp[j].readline().split(',')[1])
 		tmp[a] += 1
-	# print(tmp)
 	max_value = 0
 	for m in range(len(tmp)):
 		if tmp[m] > max_value:
@@ -26,6 +25,5 @@ for i in range(5060):
 	for k in range(len(tmp)):
 		if tmp[k] == max_value:
 			candicate.append(k)
-	# print(tmp,candicate)
 	fp2.write('%d,%d\n' % (i+1,np.argmax(tmp)))
 	# fp2.write('%d,%d\n' % (i+1,np.random.choice(candicate)))

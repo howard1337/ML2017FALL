@@ -6,8 +6,8 @@ from gensim.models import Word2Vec
 import jieba
 from jieba import analyse
 from scipy import spatial
-jieba.set_dictionary("dict.txt.big")
-analyse.set_stop_words("stop.txt")
+jieba.set_dictionary("../dict.txt.big")
+analyse.set_stop_words("../stop.txt")
 model = Word2Vec.load(sys.argv[1])
 word2idx = {"_PAD": 0}
 #vocab_list = [(k, model.wv[k]) for k, v in model.wv.vocab.items()]
