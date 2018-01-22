@@ -49,7 +49,7 @@ def sim(quest,opt):
 			continue
 		optSeg.append(oSeg)
 	sum_sim = np.zeros((opt_len, 1), dtype = float)
-	threshold = 0.30
+	threshold = 0.29
 
 	for i in questSeg:
 		if i in model.wv:
